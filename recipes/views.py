@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from utils.recipes.factory import make_recipe
 from recipes.models import Recipe
+from django.http import Http404
 
 
 def home(request):
@@ -14,13 +15,22 @@ def category(request, category_id):
         category__id=category_id,
         is_published=True,
         ).order_by('-id')
+    
+    if not recipes:
+        raise Http404('Not found')
+
+
     return render(request, 'recipes/pages/category-view.html', context={
         'recipes': recipes,
+        'title': f'{recipes.first().category.name} - Category | '
     })
 
 
-def recipe(request, id):
+def recipe(request, id):    
+    recipe = get_object_or_404(Recipe,id=id,
+        is_published=True,)
+
     return render(request, 'recipes/pages/recipe-view.html', context={
-        'recipe': make_recipe(),
+        'recipe': recipe,
         'is_detail_page': True,
     })
