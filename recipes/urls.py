@@ -4,7 +4,9 @@ from django.contrib import admin
 from recipes.views import home
 from recipes import views
 
+app_name = 'recipes'
+
 urlpatterns = [
-    path('', views.home),
-    path('recipes/<int:id>/', views.recipes),
+    path('', views.home, name='home'),
+    path('recipes/<int:id>/', views.recipe, name='recipe'),
 ]
