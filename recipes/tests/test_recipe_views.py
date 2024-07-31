@@ -1,7 +1,7 @@
 from django.urls import reverse, resolve
 from recipes import views
 from recipes.models import Recipe
-from tests.test_recipe_base import RecipeTestBase
+from .test_recipe_base import RecipeTestBase
 
 class RecipeViewsTest(RecipeTestBase):    
     def tearDown(self) -> None:
